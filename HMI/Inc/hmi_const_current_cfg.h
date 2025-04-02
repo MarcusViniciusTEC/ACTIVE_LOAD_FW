@@ -1,0 +1,4 @@
+#ifndef __HMI_CONST_CURRENT_CFG_H
+#define __HMI_CONST_CURRENT_CFG_H
+
+#endif

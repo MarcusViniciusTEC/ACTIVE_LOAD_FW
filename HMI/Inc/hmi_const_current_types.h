@@ -1,0 +1,4 @@
+#ifndef __HMI_CONST_CURRENT_TYPES_H
+#define __HMI_CONST_CURRENT_TYPES_H
+
+#endif

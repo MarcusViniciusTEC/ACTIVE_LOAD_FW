@@ -38,11 +38,23 @@ set(EXECUTABLE                      ${CMAKE_PROJECT_NAME})
 #
 set(sources_SRCS
 
+${PROJ_PATH}/App/Src/buttons.c
+${PROJ_PATH}/App/Src/encoder.c
+
+${PROJ_PATH}/HMI/Src/hmi.c
+${PROJ_PATH}/HMI/Src/hmi_menu.c
+${PROJ_PATH}/HMI/Src/hmi_intro.c
+${PROJ_PATH}/HMI/Src/hmi_const_current.c
+
+${PROJ_PATH}/DISPLAY/Src/st7789.c
+${PROJ_PATH}/DISPLAY/Src/fonts.c
+
 ${PROJ_PATH}/Core/Src/main.c
 ${PROJ_PATH}/Core/Src/freertos.c
 ${PROJ_PATH}/Core/Src/stm32f4xx_it.c
 ${PROJ_PATH}/Core/Src/stm32f4xx_hal_msp.c
 ${PROJ_PATH}/Core/Src/stm32f4xx_hal_timebase_tim.c
+
 
 ${PROJ_PATH}/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c
 ${PROJ_PATH}/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c
@@ -59,6 +71,7 @@ ${PROJ_PATH}/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c
 ${PROJ_PATH}/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c
 ${PROJ_PATH}/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c
 ${PROJ_PATH}/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c
+${PROJ_PATH}/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c
 
 ${PROJ_PATH}/Core/Src/system_stm32f4xx.c
 
@@ -84,6 +97,10 @@ ${PROJ_PATH}/Core/Startup/startup_stm32f411ceux.s
 #
 set(include_path_DIRS
 
+${PROJ_PATH}/DISPLAY/Inc
+${PROJ_PATH}/HMI/Inc
+${PROJ_PATH}/App/inc
+
 ${PROJ_PATH}/Core/Inc
 ${PROJ_PATH}/Drivers/STM32F4xx_HAL_Driver/Inc
 ${PROJ_PATH}/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy
@@ -92,7 +109,8 @@ ${PROJ_PATH}/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS
 ${PROJ_PATH}/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F
 ${PROJ_PATH}/Drivers/CMSIS/Device/ST/STM32F4xx/Include
 ${PROJ_PATH}/Drivers/CMSIS/Include
-##${PROJ_PATH}/App/Application/Src
+
+
 
 )
 

@@ -3,6 +3,7 @@
 #ifdef USE_DMA
 #include <string.h>
 #include <stdio.h>
+#include "cmsis_os.h"
 uint16_t DMA_MIN_SIZE = 16;
 /* If you're using DMA, then u need a "framebuffer" to store datas to be displayed.
  * If your MCU don't have enough RAM, please avoid using DMA(or set 5 to 1).
@@ -137,11 +138,11 @@ void ST7789_Init(void)
 	#ifdef USE_DMA
 		memset(disp_buf, 0, sizeof(disp_buf));
 	#endif
-	HAL_Delay(25);
+	vTaskDelay(25);
     ST7789_RST_Clr();
-    HAL_Delay(25);
+    vTaskDelay(25);
     ST7789_RST_Set();
-    HAL_Delay(50);
+    vTaskDelay(50);
 		
     ST7789_WriteCommand(ST7789_COLMOD);		//	Set color mode
     ST7789_WriteSmallData(ST7789_COLOR_MODE_16bit);
@@ -188,7 +189,8 @@ void ST7789_Init(void)
   	ST7789_WriteCommand (ST7789_NORON);		//	Normal Display on
   	ST7789_WriteCommand (ST7789_DISPON);	//	Main screen turned on	
 
-	HAL_Delay(50);
+	//HAL_Delay(50);
+	vTaskDelay(50);
 	ST7789_Fill_Color(BLACK);				//	Fill with Black.
 }
 

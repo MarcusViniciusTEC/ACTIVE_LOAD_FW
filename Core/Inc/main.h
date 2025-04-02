@@ -57,12 +57,24 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define LED_BOARD_Pin GPIO_PIN_13
+#define LED_BOARD_GPIO_Port GPIOC
+#define LED_STATUS_Pin GPIO_PIN_14
+#define LED_STATUS_GPIO_Port GPIOC
+#define BT_RIGHT_Pin GPIO_PIN_15
+#define BT_RIGHT_GPIO_Port GPIOC
+#define BT_OUT_Pin GPIO_PIN_3
+#define BT_OUT_GPIO_Port GPIOA
+#define BT_LEFT_Pin GPIO_PIN_4
+#define BT_LEFT_GPIO_Port GPIOA
 #define ST7789_DC_Pin GPIO_PIN_0
 #define ST7789_DC_GPIO_Port GPIOB
 #define ST7789_RST_Pin GPIO_PIN_1
 #define ST7789_RST_GPIO_Port GPIOB
 #define ST7789_CS_Pin GPIO_PIN_2
 #define ST7789_CS_GPIO_Port GPIOB
+#define ENC_BT_Pin GPIO_PIN_8
+#define ENC_BT_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 
