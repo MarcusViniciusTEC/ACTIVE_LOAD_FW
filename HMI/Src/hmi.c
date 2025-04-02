@@ -175,7 +175,7 @@ void hmi_tread_update_screen(void const *pvParameters)
     for(;;)
     {
         hmi_showing_data();
-        //led_set_pulse(LED_NAME_UART_RX, LED_MODE_HEARTBEAT_PULSE);
-        vTaskDelay(500);
+        HAL_GPIO_TogglePin(LED_STATUS_GPIO_Port, LED_STATUS_Pin);
+        vTaskDelay(200);
     }
 }
