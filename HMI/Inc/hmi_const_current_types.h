@@ -6,6 +6,12 @@
 
 typedef enum
 {
+    OUT_ON = 0U,
+    OUT_OFF
+}hmi_out_state_t;
+
+typedef enum
+{
     INDEX_FIRST_DIGIT = 0U,
     INDEX_SECOND_DIGIT,
     INDEX_THIRD_DIGIT,
@@ -33,6 +39,7 @@ typedef struct
     hmi_dashboard_mode_t mode;
     uint8_t index_field;
     uint8_t last_index_field;
+    hmi_out_state_t out_state;
 }hmi_dashboard_ctrl_t;
 
 typedef struct 
@@ -42,6 +49,12 @@ typedef struct
     uint8_t last_x;
 }hmi_cursor_cordinate_t;
 
+typedef struct
+{
+    char *tittle;
+    char *symbol;
+    uint16_t color;
+}hmi_dashboard_title_t;
 
 
 #endif

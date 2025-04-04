@@ -5,6 +5,9 @@
 #include "st7789.h"
 #include "fonts.h"
 
+#include "FreeRTOS.h"
+#include "task.h"
+#include "cmsis_os.h"
 
 
 /***********************************************************************************/
@@ -19,19 +22,15 @@ void hmi_intro_init(void)
 void hmi_intro_show_screen(void)
 {
     ST7789_WriteString(50, 200, "INTRO", Font_16x26, DARKBLUE, BLACK);
+    
 }
 
 /***********************************************************************************/
 
 void hmi_intro_update_data(void)
 {
-    static uint32_t last_tick = 0;
-
-    
-    if(HAL_GetTick() - last_tick >= (uint32_t)TIME_EXECUTION_INTRO)
-    {
-        hmi_set_screen(HMI_ID_SCREEN_MENU);
-    }
+    vTaskDelay(pdMS_TO_TICKS(1000));
+    hmi_set_screen(HMI_ID_SCREEN_MENU);
 }
 
 /***********************************************************************************/

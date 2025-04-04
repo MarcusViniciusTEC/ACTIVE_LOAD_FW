@@ -9,7 +9,6 @@
 #include "task.h"
 #include "cmsis_os.h"
 
-
 /***********************************************************************************/
 
 hmi_screen_info_t hmi_vector_screens[HMI_NUMBER_OF_SCREENS] = vector_hmi_screens_default;
@@ -141,11 +140,11 @@ void hmi_tread(void const *pvParameters)
     {
         if(hmi_ctrl.screen_id != hmi_ctrl.next_screen_id)
         {
+            
             hmi_ctrl.last_screen_id = hmi_ctrl.screen_id;
             hmi_ctrl.screen_id = hmi_ctrl.next_screen_id;
             hmi_ctrl.state = HMI_SHOWING_SCREEN;
         }
-
         switch (hmi_ctrl.state)
         {
         case HMI_SHOWING_SCREEN:
@@ -153,7 +152,7 @@ void hmi_tread(void const *pvParameters)
             hmi_ctrl.state = HMI_SHOWING_DATA;
             break;
         case HMI_SHOWING_DATA:
-            
+            hmi_showing_data();
             hmi_ctrl.state = HMI_SHOWING_UPDATE_DATA;
             break;
         case HMI_SHOWING_UPDATE_DATA:
@@ -174,7 +173,7 @@ void hmi_tread_update_screen(void const *pvParameters)
 {
     for(;;)
     {
-        hmi_showing_data();
+        
         HAL_GPIO_TogglePin(LED_STATUS_GPIO_Port, LED_STATUS_Pin);
         vTaskDelay(200);
     }
