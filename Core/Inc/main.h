@@ -78,6 +78,8 @@ void Error_Handler(void);
 
 /* USER CODE BEGIN Private defines */
 
+extern I2C_HandleTypeDef hi2c1;
+
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

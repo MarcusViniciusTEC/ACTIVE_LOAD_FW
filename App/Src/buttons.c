@@ -1,6 +1,8 @@
 
 #include "buttons.h"
 
+/***********************************************************************************/
+
 void read_buttons_state(button_data_t *button_event)
 {
     GPIO_PinState pin_state = HAL_GPIO_ReadPin(button_event->cfg.GPIO, button_event->cfg.pin);

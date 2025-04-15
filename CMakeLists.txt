@@ -45,9 +45,12 @@ ${PROJ_PATH}/HMI/Src/hmi.c
 ${PROJ_PATH}/HMI/Src/hmi_menu.c
 ${PROJ_PATH}/HMI/Src/hmi_intro.c
 ${PROJ_PATH}/HMI/Src/hmi_const_current.c
+${PROJ_PATH}/App/Src/adc.c
 
 ${PROJ_PATH}/DISPLAY/Src/st7789.c
 ${PROJ_PATH}/DISPLAY/Src/fonts.c
+${PROJ_PATH}/App/Src/MCP4725.c
+${PROJ_PATH}/App/Src/ADS1015_ADS1115.c
 
 ${PROJ_PATH}/Core/Src/main.c
 ${PROJ_PATH}/Core/Src/freertos.c
@@ -72,6 +75,8 @@ ${PROJ_PATH}/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c
 ${PROJ_PATH}/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c
 ${PROJ_PATH}/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c
 ${PROJ_PATH}/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c
+${PROJ_PATH}/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c
+${PROJ_PATH}/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c
 
 ${PROJ_PATH}/Core/Src/system_stm32f4xx.c
 

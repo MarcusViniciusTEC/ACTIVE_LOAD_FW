@@ -27,7 +27,8 @@
 #include "fonts.h"
 #include "hmi.h"
 #include "encoder.h"
-
+#include "MCP4725.h"
+#include "ADS1015_ADS1115.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -46,6 +47,8 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
+I2C_HandleTypeDef hi2c1;
+
 SPI_HandleTypeDef hspi1;
 DMA_HandleTypeDef hdma_spi1_rx;
 DMA_HandleTypeDef hdma_spi1_tx;
@@ -55,6 +58,9 @@ TIM_HandleTypeDef htim2;
 osThreadId defaultTaskHandle;
 /* USER CODE BEGIN PV */
 
+MCP4725 DAC_CURRENT;
+
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -63,6 +69,7 @@ static void MX_GPIO_Init(void);
 static void MX_DMA_Init(void);
 static void MX_SPI1_Init(void);
 static void MX_TIM2_Init(void);
+static void MX_I2C1_Init(void);
 void StartDefaultTask(void const * argument);
 
 /* USER CODE BEGIN PFP */
@@ -107,9 +114,12 @@ int main(void)
   MX_DMA_Init();
   MX_SPI1_Init();
   MX_TIM2_Init();
+  MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
 
   HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
+  
+  
 
   /* USER CODE END 2 */
 
@@ -198,6 +208,40 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+}
+
+/**
+  * @brief I2C1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_I2C1_Init(void)
+{
+
+  /* USER CODE BEGIN I2C1_Init 0 */
+
+  /* USER CODE END I2C1_Init 0 */
+
+  /* USER CODE BEGIN I2C1_Init 1 */
+
+  /* USER CODE END I2C1_Init 1 */
+  hi2c1.Instance = I2C1;
+  hi2c1.Init.ClockSpeed = 100000;
+  hi2c1.Init.DutyCycle = I2C_DUTYCYCLE_2;
+  hi2c1.Init.OwnAddress1 = 0;
+  hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
+  hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+  hi2c1.Init.OwnAddress2 = 0;
+  hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+  hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
+  if (HAL_I2C_Init(&hi2c1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN I2C1_Init 2 */
+
+  /* USER CODE END I2C1_Init 2 */
+
 }
 
 /**
@@ -385,9 +429,22 @@ void StartDefaultTask(void const * argument)
   ST7789_Fill_Color(BLACK);
   hmi_init();
   encoder_init();
+  DAC_CURRENT = MCP4725_init(&hi2c1, MCP4725A0_ADDR_A00, 3.30);
+
+
+
+  if(MCP4725_isConnected(&DAC_CURRENT))
+  {
+
+  }
+  else
+  {
+
+  }
 
   for(;;)
   {
+    MCP4725_setValue(&DAC_CURRENT, 10, MCP4725_FAST_MODE, MCP4725_POWER_DOWN_OFF);    
     HAL_GPIO_TogglePin(LED_BOARD_GPIO_Port, LED_BOARD_Pin);
     vTaskDelay(500);
   }

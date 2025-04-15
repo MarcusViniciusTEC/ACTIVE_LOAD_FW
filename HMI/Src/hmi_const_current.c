@@ -8,7 +8,12 @@
 #include "fonts.h"
 #include "hmi.h"
 
+#include "main.h"
+#include "ADS1015_ADS1115.h"
+
 #include "hmi_const_current_types.h"
+
+ADS1xx5_I2C i2c_adc;
 
 /***********************************************************************************/
 
@@ -78,7 +83,15 @@ static void hmi_dashboard_show_power(void)
 
 static void hmi_dashboard_show_resistence(void)
 {
-    ST7789_WriteString(5, 140, "00.000 R",Font_16x26, GRAY, BLACK);   
+    char sz_string[20] = {0};
+    snprintf(sz_string, sizeof(sz_string), "%d%d.%d%d%d",
+    (ADSreadADC_SingleEnded(&i2c_adc, 0)/10000),
+    (ADSreadADC_SingleEnded(&i2c_adc, 0)/1000) % 10,
+    (ADSreadADC_SingleEnded(&i2c_adc, 0)/100) % 10,
+    (ADSreadADC_SingleEnded(&i2c_adc, 0)/10) % 10,
+    (ADSreadADC_SingleEnded(&i2c_adc, 0) % 10));
+    //ST7789_WriteString(5, 140, "00.000 R",Font_16x26, GRAY, BLACK);   
+    ST7789_WriteString(5, 140, sz_string,Font_16x26, GRAY, BLACK);
 }
 
 /***********************************************************************************/
@@ -233,6 +246,9 @@ void hmi_dashboard_init(void)
     hmi_dashboard_ctrl.index_field = INDEX_FIRST_DIGIT;
     hmi_dashboard_ctrl.last_index_field = hmi_dashboard_ctrl.index_field;
     hmi_dashboard_ctrl.out_state = OUT_OFF;
+
+    ADS1115(&i2c_adc, &hi2c1, ADS_ADDR_GND); // Or ADS1015(&i2c, &hi2c1, ADS_ADDR_GND);
+    ADSsetGain(&i2c_adc, GAIN_SIXTEEN);
 }
 
 /***********************************************************************************/
@@ -250,12 +266,7 @@ void hmi_dashboard_show_screen(void)
     ST7789_DrawRectangle(0, 0, 318, 239, WHITE);
     ST7789_DrawLine(137, 27, 137, 180, WHITE);
     ST7789_DrawLine(137, 100, 318, 100, WHITE);
-}
 
-/***********************************************************************************/
-
-void hmi_dashboard_update_data(void)
-{
     hmi_dashboard_show_voltage();
     hmi_dashboard_show_power();
     hmi_dashboard_show_current();
@@ -265,6 +276,13 @@ void hmi_dashboard_update_data(void)
     hmi_dashboard_show_target();
     hmi_dashboard_show_resistence();
     hmi_dashboard_show_cursor();
+}
+
+/***********************************************************************************/
+
+void hmi_dashboard_update_data(void)
+{
+    hmi_dashboard_show_resistence();
 }
 
 /***********************************************************************************/
