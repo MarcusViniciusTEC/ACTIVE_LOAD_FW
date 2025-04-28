@@ -46,6 +46,7 @@ ${PROJ_PATH}/HMI/Src/hmi_menu.c
 ${PROJ_PATH}/HMI/Src/hmi_intro.c
 ${PROJ_PATH}/HMI/Src/hmi_const_current.c
 ${PROJ_PATH}/App/Src/adc.c
+${PROJ_PATH}/App/Src/dac.c
 
 ${PROJ_PATH}/DISPLAY/Src/st7789.c
 ${PROJ_PATH}/DISPLAY/Src/fonts.c
@@ -57,7 +58,6 @@ ${PROJ_PATH}/Core/Src/freertos.c
 ${PROJ_PATH}/Core/Src/stm32f4xx_it.c
 ${PROJ_PATH}/Core/Src/stm32f4xx_hal_msp.c
 ${PROJ_PATH}/Core/Src/stm32f4xx_hal_timebase_tim.c
-
 
 ${PROJ_PATH}/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c
 ${PROJ_PATH}/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c

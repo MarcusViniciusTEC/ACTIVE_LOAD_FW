@@ -27,8 +27,10 @@
 #include "fonts.h"
 #include "hmi.h"
 #include "encoder.h"
+#include "dac.h"
 #include "MCP4725.h"
 #include "ADS1015_ADS1115.h"
+#include "adc.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -58,7 +60,6 @@ TIM_HandleTypeDef htim2;
 osThreadId defaultTaskHandle;
 /* USER CODE BEGIN PV */
 
-MCP4725 DAC_CURRENT;
 
 
 /* USER CODE END PV */
@@ -99,7 +100,6 @@ int main(void)
 
   /* USER CODE BEGIN Init */
 
-  
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -119,8 +119,6 @@ int main(void)
 
   HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
   
-  
-
   /* USER CODE END 2 */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -429,22 +427,12 @@ void StartDefaultTask(void const * argument)
   ST7789_Fill_Color(BLACK);
   hmi_init();
   encoder_init();
-  DAC_CURRENT = MCP4725_init(&hi2c1, MCP4725A0_ADDR_A00, 3.30);
-
-
-
-  if(MCP4725_isConnected(&DAC_CURRENT))
-  {
-
-  }
-  else
-  {
-
-  }
+  adc_init();
+  dac_init();
 
   for(;;)
-  {
-    MCP4725_setValue(&DAC_CURRENT, 10, MCP4725_FAST_MODE, MCP4725_POWER_DOWN_OFF);    
+  {   
+    set_dac_target(80);
     HAL_GPIO_TogglePin(LED_BOARD_GPIO_Port, LED_BOARD_Pin);
     vTaskDelay(500);
   }

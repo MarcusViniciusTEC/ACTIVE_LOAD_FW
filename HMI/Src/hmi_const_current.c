@@ -7,13 +7,11 @@
 #include "st7789.h"
 #include "fonts.h"
 #include "hmi.h"
+#include "adc.h"
 
 #include "main.h"
-#include "ADS1015_ADS1115.h"
 
 #include "hmi_const_current_types.h"
-
-ADS1xx5_I2C i2c_adc;
 
 /***********************************************************************************/
 
@@ -58,7 +56,6 @@ hmi_out_state_t hmi_dashboard_get_out_state(void)
 
 /***********************************************************************************/
 
-
 static void hmi_dashboard_show_current(void)
 {
     ST7789_WriteString(5, 30, "Read:",Font_11x18, LIGHTBLUE, BLACK);
@@ -83,13 +80,13 @@ static void hmi_dashboard_show_power(void)
 
 static void hmi_dashboard_show_resistence(void)
 {
-    char sz_string[20] = {0};
+    char sz_string[30] = {0};
     snprintf(sz_string, sizeof(sz_string), "%d%d.%d%d%d",
-    (ADSreadADC_SingleEnded(&i2c_adc, 0)/10000),
-    (ADSreadADC_SingleEnded(&i2c_adc, 0)/1000) % 10,
-    (ADSreadADC_SingleEnded(&i2c_adc, 0)/100) % 10,
-    (ADSreadADC_SingleEnded(&i2c_adc, 0)/10) % 10,
-    (ADSreadADC_SingleEnded(&i2c_adc, 0) % 10));
+    (uint8_t)(get_adc_raw_value(ADC_MODE_CURRENT, CURRENT_CHANNEL_0)/10000),
+    (uint8_t)(get_adc_raw_value(ADC_MODE_CURRENT, CURRENT_CHANNEL_0)/1000) % 10,
+    (uint8_t)(get_adc_raw_value(ADC_MODE_CURRENT, CURRENT_CHANNEL_0)/100) % 10,
+    (uint8_t)(get_adc_raw_value(ADC_MODE_CURRENT, CURRENT_CHANNEL_0)/10) % 10,
+    (uint8_t)(get_adc_raw_value(ADC_MODE_CURRENT, CURRENT_CHANNEL_0) % 10));
     //ST7789_WriteString(5, 140, "00.000 R",Font_16x26, GRAY, BLACK);   
     ST7789_WriteString(5, 140, sz_string,Font_16x26, GRAY, BLACK);
 }
@@ -247,8 +244,7 @@ void hmi_dashboard_init(void)
     hmi_dashboard_ctrl.last_index_field = hmi_dashboard_ctrl.index_field;
     hmi_dashboard_ctrl.out_state = OUT_OFF;
 
-    ADS1115(&i2c_adc, &hi2c1, ADS_ADDR_GND); // Or ADS1015(&i2c, &hi2c1, ADS_ADDR_GND);
-    ADSsetGain(&i2c_adc, GAIN_SIXTEEN);
+
 }
 
 /***********************************************************************************/
@@ -328,6 +324,7 @@ void hmi_dashboard_update_button(button_id_t button_id, button_press_type_t butt
     }
 
     hmi_dashboard_show_cursor();
+    hmi_dashboard_show_resistence();
 
 }
 
@@ -347,6 +344,7 @@ void hmi_dashboard_update_encoder(enc_state_t enc_state)
         break;
     }
     hmi_dashboard_show_target();
+    hmi_dashboard_show_resistence();
 }
 
 /***********************************************************************************/

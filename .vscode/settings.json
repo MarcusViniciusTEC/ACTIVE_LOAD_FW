@@ -21,7 +21,10 @@
         "encoder.h": "c",
         "compare": "c",
         "hmi_menu_types.h": "c",
-        "hmi_intro.h": "c"
+        "hmi_intro.h": "c",
+        "st7789.h": "c",
+        "ads1015_ads1115.h": "c",
+        "adc_types.h": "c"
     }
 
 }

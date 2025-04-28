@@ -35,7 +35,6 @@ static encoder_data_t encoder_data [] = {{hmi_showing_update_data_encoder, 0, 0}
 
 void hmi_init(void)
 {
-
     for(hmi_ctrl.screen_id = 0; hmi_ctrl.screen_id < HMI_NUMBER_OF_SCREENS; hmi_ctrl.screen_id++)
     {
         hmi_vector_screens[hmi_ctrl.screen_id].init();
@@ -140,7 +139,6 @@ void hmi_tread(void const *pvParameters)
     {
         if(hmi_ctrl.screen_id != hmi_ctrl.next_screen_id)
         {
-            
             hmi_ctrl.last_screen_id = hmi_ctrl.screen_id;
             hmi_ctrl.screen_id = hmi_ctrl.next_screen_id;
             hmi_ctrl.state = HMI_SHOWING_SCREEN;
@@ -152,13 +150,11 @@ void hmi_tread(void const *pvParameters)
             hmi_ctrl.state = HMI_SHOWING_DATA;
             break;
         case HMI_SHOWING_DATA:
-            
             hmi_ctrl.state = HMI_SHOWING_UPDATE_DATA;
             break;
         case HMI_SHOWING_UPDATE_DATA:
             hmi_buttons_update_state();
             hmi_encoder_update_state();
-           // hmi_ctrl.state = HMI_SHOWING_DATA;
             break;
         default:
             break;
